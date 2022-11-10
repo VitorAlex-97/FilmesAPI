@@ -8,8 +8,6 @@ namespace FilmesAPI.Data.Dtos.Cinema
 {
   public class ReadCinemaDto
   {
-    [Key]
-    [Required]
     public int Id { get; set; }
 
     [Required (ErrorMessage = "Nome é um campo obrigatório")]

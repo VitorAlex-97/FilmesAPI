@@ -44,6 +44,11 @@ namespace FilmesAPI.Controllers
     public async Task<ActionResult<Cinema>> Create([FromBody] CreateCinemaDto dto)
     {
       var cinema = _mapper.Map<Cinema>(dto);
+      var endereco = _context.Enderecos.FirstOrDefault(e => e.Id == dto.EnderecoId);
+      if (endereco == null)
+      {
+        return BadRequest("S");
+      }
       await _context.Cinemas.AddAsync(cinema);
       await _context.SaveChangesAsync();
       return CreatedAtAction(nameof(Create), new {Id = cinema.Id}, cinema);
@@ -59,7 +64,7 @@ namespace FilmesAPI.Controllers
         return BadRequest("Cinema não encontrado");
       }
       
-      _mapper.Map(dto, cinemaDb);
+      _mapper.Map(cinema, cinemaDb);
       await _context.SaveChangesAsync();
       var dtoResponse = _mapper.Map<ReadCinemaDto>(cinemaDb);
       return CreatedAtAction(nameof(UpdateById), new { Id = dtoResponse.Id }, dtoResponse);

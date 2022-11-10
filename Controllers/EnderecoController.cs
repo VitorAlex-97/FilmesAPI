@@ -23,12 +23,48 @@ namespace FilmesAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateEnderecoDto dto)
+        public async Task<ActionResult> Create([FromBody] CreateEnderecoDto dto)
         {
             var endereco = _mapper.Map<Endereco>(dto);
             _context.Enderecos.Add(endereco);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(Create), new { Id = endereco.Id }, endereco);
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<Endereco>> GetAll() 
+        {
+            var enderecos = _context.Enderecos.ToList();
+            return enderecos;
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<Endereco> GetOneById(int id)
+        {
+            var endereco = _context.Enderecos.FirstOrDefault(e => e.Id == id);
+            if(endereco == null)
+            {
+                return BadRequest("Endereço não encontrado");
+            }
+
+            return endereco;
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<Endereco>> UpdateOne([FromBody] UpdateEnderecoDto dto, int id)
+        {
+            var endereco = _mapper.Map<Endereco>(dto);
+            var enderecoDb = _context.Enderecos.FirstOrDefault(e => e.Id == id);
+
+            if (enderecoDb == null)
+            {
+                return BadRequest("Endereço não encontrado");
+            }
+
+            _mapper.Map(endereco, enderecoDb);
+            await _context.SaveChangesAsync();
+            var dtoResponse = _mapper.Map<ReadEnderecoDto>(enderecoDb);
+            return Ok(dtoResponse);
         }
     }
 }

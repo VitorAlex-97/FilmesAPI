@@ -11,7 +11,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(dbContextOptions  =>  { 
-    dbContextOptions .UseMySql(
+    dbContextOptions
+    .UseLazyLoadingProxies()
+    .UseMySql(
         builder.Configuration.GetConnectionString("FilmeConnection"), 
         new MySqlServerVersion(new Version(8,0)));
 });

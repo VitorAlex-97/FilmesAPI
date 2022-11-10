@@ -1,22 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using FilmesAPI.Data.Dtos.Cinema;
 
-namespace FilmesAPI.Models
+namespace FilmesAPI.Data.Dtos.Endereco
 {
-    public class Endereco
+    public class ReadEnderecoDto
     {
-        [Key]
-        [Required]
         public int Id { get; set; }
         public string Logradouro { get; set; }
         public string Bairro { get; set; }
         public int Numero { get; set; }
 
-        [JsonIgnore]
-        public virtual Cinema Cinema { get; set; }
+        public ReadCinemaDto Cinema { get; set; }
     }
 }
