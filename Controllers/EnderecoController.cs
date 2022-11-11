@@ -34,8 +34,9 @@ namespace FilmesAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Endereco>> GetAll() 
         {
-            var enderecos = _context.Enderecos.ToList();
-            return enderecos;
+            var enderecosGroup = _context.Enderecos.ToList();
+            var endereResponseDto = _mapper.Map<List<ReadEnderecoDto>>(enderecosGroup);
+            return Ok(endereResponseDto);
         }
 
         [HttpGet("{id}")]
@@ -47,7 +48,8 @@ namespace FilmesAPI.Controllers
                 return BadRequest("Endereço não encontrado");
             }
 
-            return endereco;
+            var dtoResponse = _mapper.Map<ReadEnderecoDto>(endereco);
+            return Ok(dtoResponse);
         }
 
         [HttpPut]

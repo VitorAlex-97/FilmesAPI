@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FilmesAPI.Data.Dtos.Cinema;
 
 namespace FilmesAPI.Data.Dtos.Endereco
 {
@@ -13,6 +12,5 @@ namespace FilmesAPI.Data.Dtos.Endereco
         public string Bairro { get; set; }
         public int Numero { get; set; }
 
-        public ReadCinemaDto Cinema { get; set; }
     }
 }

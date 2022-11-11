@@ -12,5 +12,7 @@ namespace FilmesAPI.Data.Dtos.Cinema
 
     [Required (ErrorMessage = "Nome é um campo obrigatório")]
     public string Nome { get; set; }
+
+    // public virtual Endereco Endereco { get; set; }
   }
 }
