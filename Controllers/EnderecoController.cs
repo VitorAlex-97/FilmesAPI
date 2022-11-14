@@ -6,7 +6,7 @@ using AutoMapper;
 using Domain.Models;
 using FilmesAPI.Data;
 using FilmesAPI.Data.Dtos;
-using FilmesAPI.Models;
+using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FilmesAPI.Controllers

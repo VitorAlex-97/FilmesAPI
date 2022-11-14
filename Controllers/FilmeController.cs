@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FilmesAPI.Data;
 using FilmesAPI.Data.Dtos;
-using FilmesAPI.Models;
+using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FilmesAPI.Controllers
@@ -77,7 +77,7 @@ namespace FilmesAPI.Controllers
       _context.Filmes.Remove(filme);
       _context.SaveChanges();
 
-    return NoContent();
+      return NoContent();
     }
   }
 }
