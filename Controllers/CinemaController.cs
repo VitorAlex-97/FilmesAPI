@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Domain.Models;
 using FilmesAPI.Data;
-using FilmesAPI.Data.Dtos.Cinema;
+using FilmesAPI.Data.Dtos;
+// using FilmesAPI.Data.Dtos.CinemaDto;
 using FilmesAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,14 +32,15 @@ namespace FilmesAPI.Controllers
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Cinema> GetOneById(int id)
+    public ActionResult<ReadCinemaDto> GetOneById(int id)
     {
       var cinema = _context.Cinemas.FirstOrDefault(c => c.Id == id);
       if (cinema == null) {
         return BadRequest("Cinema não encontrado");
       }
 
-      return cinema;
+      var readCinemaDtoResponse = _mapper.Map<ReadCinemaDto>(cinema);
+      return readCinemaDtoResponse;
     }
 
     [HttpPost]
@@ -51,7 +54,8 @@ namespace FilmesAPI.Controllers
       }
       await _context.Cinemas.AddAsync(cinema);
       await _context.SaveChangesAsync();
-      return CreatedAtAction(nameof(Create), new {Id = cinema.Id}, cinema);
+      var readCinemaDtoResponse = _mapper.Map<ReadCinemaDto>(cinema);
+      return CreatedAtAction(nameof(Create), new {Id = readCinemaDtoResponse.Id}, readCinemaDtoResponse);
     }
 
     [HttpPut("{id}")]

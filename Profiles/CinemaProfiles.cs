@@ -1,10 +1,10 @@
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FilmesAPI.Data.Dtos.Cinema;
-using FilmesAPI.Models;
+using FilmesAPI.Data.Dtos;
 
 namespace FilmesAPI.Profiles
 {
