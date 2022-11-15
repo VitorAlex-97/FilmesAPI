@@ -34,10 +34,28 @@ namespace FilmesAPI.Controllers
     }
 
     [HttpGet]
-    public IEnumerable<Filme> GetAll()
+    public ActionResult<IEnumerable<Filme>> GetAll([FromQuery] int? classificacaoEtaria = null)
     {
-      var filmesDto = _mapper.Map<List<Filme>>(_context.Filmes.ToList());
-      return filmesDto;
+      IEnumerable<Filme> filmes = new List<Filme>();
+      
+      if (classificacaoEtaria == null)
+      {
+        filmes = _context.Filmes.ToList();
+      } 
+      else {
+        filmes  = _context.Filmes
+                    .Where(filme => filme.ClassificacaoEtaria <= classificacaoEtaria)
+                    .ToList();
+      }
+
+      
+      if (filmes == null)
+      {
+        filmes = Enumerable.Empty<Filme>();
+      }
+
+      var filmesDto = _mapper.Map<List<Filme>>(filmes);
+      return Ok(filmesDto);
     }
 
     [HttpGet("{id}")]
