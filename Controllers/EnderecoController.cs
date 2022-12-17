@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+
 using Domain.Models;
-using FilmesAPI.Data;
 using FilmesAPI.Data.Dtos;
-using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using FilmesAPI.Services;
+using FluentResults;
 
 namespace FilmesAPI.Controllers
 {
@@ -15,59 +11,52 @@ namespace FilmesAPI.Controllers
     [Route("[controller]")]
     public class EnderecoController : ControllerBase
     {
-        private readonly AppDbContext _context;
-        private readonly IMapper _mapper;
-        public EnderecoController(AppDbContext context, IMapper mapper)
+        private readonly EnderecoService _enderecoService;
+        public EnderecoController(EnderecoService enderecoService)
         {
-            _context = context;
-            _mapper = mapper;
+            _enderecoService = enderecoService;
         }
 
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] CreateEnderecoDto dto)
         {
-            var endereco = _mapper.Map<Endereco>(dto);
-            _context.Enderecos.Add(endereco);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(Create), new { Id = endereco.Id }, endereco);
+            var readEnderecoDto = await _enderecoService.Create(dto);
+           
+            return CreatedAtAction(nameof(Create), new { Id = readEnderecoDto.Id }, readEnderecoDto);
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Endereco>> GetAll() 
+        public async Task<ActionResult<IEnumerable<ReadEnderecoDto>>> GetAll() 
         {
-            var enderecosGroup = _context.Enderecos.ToList();
-            var endereResponseDto = _mapper.Map<List<ReadEnderecoDto>>(enderecosGroup);
-            return Ok(endereResponseDto);
+            List<ReadEnderecoDto> enderecos = await _enderecoService.GetAll();
+            return Ok(enderecos);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Endereco> GetOneById(int id)
+        public ActionResult<ReadEnderecoDto> GetOneById(int id)
         {
-            var endereco = _context.Enderecos.FirstOrDefault(e => e.Id == id);
-            if(endereco == null)
+            var result = _enderecoService.GetOneById(id);
+
+            if (result.IsSuccess) 
             {
-                return BadRequest("Endereço não encontrado");
+                var readEnderecoDto = result.Value;
+                return Ok(readEnderecoDto);
             }
 
-            var dtoResponse = _mapper.Map<ReadEnderecoDto>(endereco);
-            return Ok(dtoResponse);
+            return BadRequest(result.Errors[0].Message);
         }
 
         [HttpPut]
-        public async Task<ActionResult<Endereco>> UpdateOne([FromBody] UpdateEnderecoDto dto, int id)
+        public async Task<ActionResult<ReadEnderecoDto>> UpdateOne([FromBody] UpdateEnderecoDto dto, int id)
         {
-            var endereco = _mapper.Map<Endereco>(dto);
-            var enderecoDb = _context.Enderecos.FirstOrDefault(e => e.Id == id);
-
-            if (enderecoDb == null)
+            var result = await _enderecoService.UpdateOne(dto, id);
+            if(result.IsSuccess)
             {
-                return BadRequest("Endereço não encontrado");
+                var readEnderecoDto = result.Value;
+                return Ok(readEnderecoDto);
             }
 
-            _mapper.Map(endereco, enderecoDb);
-            await _context.SaveChangesAsync();
-            var dtoResponse = _mapper.Map<ReadEnderecoDto>(enderecoDb);
-            return Ok(dtoResponse);
+            return BadRequest(result.Errors[0].Message);
         }
     }
 }

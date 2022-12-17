@@ -38,3 +38,10 @@ C:\workspace\estudos\dotnet\FilmesAPI\bin\Debug\net6.0\AutoMapper.dll
 C:\workspace\estudos\dotnet\FilmesAPI\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\workspace\estudos\dotnet\FilmesAPI\bin\Debug\net6.0\Castle.Core.dll
 C:\workspace\estudos\dotnet\FilmesAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Proxies.dll
+C:\workspace\estudos\dotnet\FilmesAPI\obj\Debug\net6.0\staticwebassets\msbuild.FilmesAPI.Microsoft.AspNetCore.StaticWebAssets.props
+C:\workspace\estudos\dotnet\FilmesAPI\obj\Debug\net6.0\staticwebassets\msbuild.build.FilmesAPI.props
+C:\workspace\estudos\dotnet\FilmesAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.FilmesAPI.props
+C:\workspace\estudos\dotnet\FilmesAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.FilmesAPI.props
+C:\workspace\estudos\dotnet\FilmesAPI\obj\Debug\net6.0\staticwebassets.pack.json
+C:\workspace\estudos\dotnet\FilmesAPI\bin\Debug\net6.0\FluentResults.dll
+C:\workspace\estudos\dotnet\FilmesAPI\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
