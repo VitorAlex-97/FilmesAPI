@@ -27,9 +27,9 @@ namespace FilmesAPI.Services
             return _mapper.Map<ReadEnderecoDto>(endereco);
         }
 
-        public Task<List<ReadEnderecoDto>>GetAll()
+        public async Task<List<ReadEnderecoDto>> GetAll()
         {
-            var enderecos = await _context.Enderecos.ToListAsync().Result;
+            var enderecos = await _context.Enderecos.ToListAsync();
             return _mapper.Map<List<ReadEnderecoDto>>(enderecos);
         }
 
