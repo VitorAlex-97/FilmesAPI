@@ -27,9 +27,9 @@ namespace FilmesAPI.Services
             return _mapper.Map<ReadEnderecoDto>(endereco);
         }
 
-        public Task<List<ReadEnderecoDto>>GetAll()
+        public async Task<List<ReadEnderecoDto>> GetAll()
         {
-            var enderecos = await _context.Enderecos.ToListAsync().Result;
+            var enderecos = await _context.Enderecos.ToListAsync();
             return _mapper.Map<List<ReadEnderecoDto>>(enderecos);
         }
 
@@ -44,20 +44,20 @@ namespace FilmesAPI.Services
             return Result.Ok(_mapper.Map<ReadEnderecoDto>(endereco));
         }
 
-        public async Task<Result<ReadEnderecoDto>> UpdateOne(UpdateEnderecoDto dto, int id)
+        public Result<ReadEnderecoDto> UpdateOne(UpdateEnderecoDto enderecoDto, int id)
         {
-            var endereco = _mapper.Map<Endereco>(dto);
-            var enderecoDb = await _context.Enderecos.FirstOrDefaultAsync(e => e.Id == id);
+            var enderecoDb = _context.Enderecos.FirstOrDefault(e => e.Id == id);
 
             if (enderecoDb == null)
             {
                 return Result.Fail("Endereço não encontrado");
             }
 
-            _mapper.Map(endereco, enderecoDb);
-            await _context.SaveChangesAsync();
+            _mapper.Map(enderecoDto, enderecoDb);
+            _context.SaveChanges();
 
-            return Result.Ok(_mapper.Map<ReadEnderecoDto>(enderecoDb));
+            var readEnderecoDto = _mapper.Map<ReadEnderecoDto>(enderecoDb);
+            return Result.Ok(readEnderecoDto);
         }
     }
 }

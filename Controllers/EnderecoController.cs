@@ -46,10 +46,10 @@ namespace FilmesAPI.Controllers
             return BadRequest(result.Errors[0].Message);
         }
 
-        [HttpPut]
-        public async Task<ActionResult<ReadEnderecoDto>> UpdateOne([FromBody] UpdateEnderecoDto dto, int id)
+        [HttpPut("{id}")]
+        public ActionResult<ReadEnderecoDto> UpdateOne([FromBody] UpdateEnderecoDto dto, int id)
         {
-            var result = await _enderecoService.UpdateOne(dto, id);
+            var result = _enderecoService.UpdateOne(dto, id);
             if(result.IsSuccess)
             {
                 var readEnderecoDto = result.Value;
