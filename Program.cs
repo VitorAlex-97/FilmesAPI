@@ -12,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<FilmeService, FilmeService>();
 builder.Services.AddScoped<CinemaService, CinemaService>();
+builder.Services.AddScoped<EnderecoService, EnderecoService>();
 
 builder.Services.AddDbContext<AppDbContext>(dbContextOptions  =>  { 
     dbContextOptions
